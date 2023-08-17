@@ -5,6 +5,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ArticlesBoardComponent } from './components/articles-board/articles-board.component';
+import { MatInputModule } from "@angular/material/input";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -14,7 +16,9 @@ import { ArticlesBoardComponent } from './components/articles-board/articles-boa
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    MatInputModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
