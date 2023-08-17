@@ -21,6 +21,7 @@ export interface Article{
   image_url: string;
   title: string;
   summary: string;
+  published_at: string;
 }
 
 @Injectable({
