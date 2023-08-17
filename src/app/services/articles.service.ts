@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { BehaviorSubject, map, Observable, pipe, tap } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 
 const API = {
   protocol: 'https',
