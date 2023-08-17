@@ -11,12 +11,14 @@ import { ArticleCardComponent } from "./components/article-card/article-card.com
 import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
 import { ReactiveFormsModule } from "@angular/forms";
+import { WordsLighterPipe } from './pipes/words-lighter.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     ArticlesBoardComponent,
-    ArticleCardComponent
+    ArticleCardComponent,
+    WordsLighterPipe
   ],
   imports: [
     BrowserModule,

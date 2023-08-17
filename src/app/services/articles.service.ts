@@ -57,7 +57,6 @@ export class ArticlesService {
     let searchString = ''
     if (search) searchString = this._getSearchString(search)
     this._isLoadingSubject.next(true);
-    console.log(searchString)
     this._http.get<ApiResponse>(this._articlesUrl + searchString).subscribe(
         (resp: ApiResponse) => {
           this._resultsQuantitySubject.next(resp.count);

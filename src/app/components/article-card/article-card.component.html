@@ -26,8 +26,7 @@
   </mat-card-header>
 
   <mat-card-content class="px-[25px]">
-    <p class="text-base leading-normal mb-[20px] h-[96px]">
-      {{ articleData.summary.slice(0, 100) }}...
+    <p class="text-base leading-normal mb-[20px] h-[96px]" [innerHTML]="articleData.summary.slice(0, 100) | wordsLighter: []">
     </p>
   </mat-card-content>
 

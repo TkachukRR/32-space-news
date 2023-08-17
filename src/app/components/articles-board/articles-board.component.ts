@@ -2,8 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Article, ArticlesService, SearchParams } from "../../services/articles.service";
 import { FormBuilder, FormGroup } from "@angular/forms";
 
-const ARTICLES_LIMIT = 9
-const ARTICLES_OFFSET = 9
+const ARTICLES_LIMIT = 3
+const ARTICLES_OFFSET = 3
 
 @Component({
   selector: 'app-articles-board',
@@ -27,7 +27,11 @@ export class ArticlesBoardComponent implements OnInit{
     this._as.isLoading$.subscribe( isLoading => this.isLoadingData$ = isLoading)
     this._as.resultsQuantity$.subscribe( results => this.results$ = results)
     this._as.articles$.subscribe(articles => this.articles = articles)
-    this._as.getArticles()
+    this._as.getArticles({
+      limit: ARTICLES_LIMIT,
+      offset: ARTICLES_OFFSET,
+      value: ''
+    })
   }
 
   public onSubmit(): void{
