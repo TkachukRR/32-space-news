@@ -9,6 +9,13 @@ const API = {
   service: 'articles'
 }
 
+const API_PARAMS = {
+  limit: 'limit=',
+  offset: 'offset=',
+  oneOfSummary: 'summary_contains_one=',
+  oneOfTitle: 'title_contains_one='
+}
+
 export interface ApiResponse {
   count: number;
   next: string | null;
@@ -22,6 +29,12 @@ export interface Article{
   title: string;
   summary: string;
   published_at: string;
+}
+
+export interface SearchParams {
+  offset: number;
+  limit: number;
+  value: string;
 }
 
 @Injectable({
@@ -40,14 +53,25 @@ export class ArticlesService {
   private _articlesSubject = new BehaviorSubject<Article[]>([]);
   public articles$ = this._articlesSubject.asObservable();
 
-  public getArticles(): void {
+  public getArticles(search: SearchParams | '' = '' ): void {
+    let searchString = ''
+    if (search) searchString = this._getSearchString(search)
     this._isLoadingSubject.next(true);
-    this._http.get<ApiResponse>(this._articlesUrl).subscribe(
+    console.log(searchString)
+    this._http.get<ApiResponse>(this._articlesUrl + searchString).subscribe(
         (resp: ApiResponse) => {
           this._resultsQuantitySubject.next(resp.count);
           this._articlesSubject.next(resp.results);
           this._isLoadingSubject.next(false);
         }
       )
+  }
+
+  private _getSearchString(search: SearchParams): string{
+    return (
+      '?' + API_PARAMS.limit + search.limit +
+      '&' + API_PARAMS.offset + search.offset +
+      '&' + API_PARAMS.oneOfTitle + search.value +
+      '&' + API_PARAMS.oneOfSummary + search.value)
   }
 }
