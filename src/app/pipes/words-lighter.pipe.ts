@@ -8,29 +8,30 @@ export class WordsLighterPipe implements PipeTransform {
   private _sanitizer = inject(DomSanitizer);
 
   transform(inputParagraph: string, wordsArray: string[]): SafeHtml {
+    if (wordsArray.length === 0) return this._sanitizer.bypassSecurityTrustHtml(inputParagraph)
+
     const wordsArrayFromParagraph = inputParagraph.split(' ');
-    const wordsLighterArray: string[] = []
+    const commonWords: string[] = []
 
-      wordsArrayFromParagraph.map((wordFromParagraph:string) => {
-      if (/[.,!?;:"]$/.test(wordFromParagraph)) {
-        const deletedSymbol: string = wordFromParagraph.slice(-1)
-        wordsArray.map((word: string) => {
-          if (word.toLowerCase() === wordFromParagraph.slice(0,-1).toLowerCase()) {
-            wordsLighterArray.push('<span class="bg-yellow-400 bg-opacity-60">' + wordFromParagraph.slice(0,-1) + '</span>' + deletedSymbol)
-          }
+    for (const wordFromParagraph of wordsArrayFromParagraph) {
+      for (const word of wordsArray) {
+        if (/[.,!?;:"]$/.test(wordFromParagraph) && wordFromParagraph.slice(0,-1).toLowerCase() === word.toLowerCase()) {
+          commonWords.push(wordFromParagraph);
+        }
+        if (wordFromParagraph.toLowerCase() === word.toLowerCase()) {
+          commonWords.push(wordFromParagraph);
+        }
+      }
+    }
+
+    wordsArrayFromParagraph.map((word, index) => {
+        commonWords.map(commonWord => {
+          if (word.toLowerCase() === commonWord.toLowerCase()) wordsArrayFromParagraph[index] = '<span style="background-color: rgba(255, 246, 25, 0.63); line-height: inherit; font-weight: inherit ; font-size: inherit;">' + word + '</span>'
         })
       }
-      else {
-        wordsArray.map((word: string) => {
-          if (word.toLowerCase() === wordFromParagraph.toLowerCase()) {
-            wordsLighterArray.push('<span class="bg-yellow-400 bg-opacity-60">' + wordFromParagraph + '</span>')
-          }
-        })
-      }
-      wordsLighterArray.push(wordFromParagraph)
-    })
+    )
 
-    return this._sanitizer.bypassSecurityTrustHtml(wordsLighterArray.join(' '))
+    return this._sanitizer.bypassSecurityTrustHtml(wordsArrayFromParagraph.join(' '))
   }
 
 }
