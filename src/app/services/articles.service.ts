@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { map, Observable, tap } from "rxjs";
+import { BehaviorSubject, map, Observable, pipe, tap } from "rxjs";
 
 const API = {
   protocol: 'https',
@@ -28,12 +28,25 @@ export interface Article{
 })
 export class ArticlesService {
   private _http = inject(HttpClient);
-  private _articlesUrl =`${API.protocol}://${API.url}/${API.version}/${API.service}/`
+  private _articlesUrl: string =`${API.protocol}://${API.url}/${API.version}/${API.service}/`;
 
-  public getArticles(): Observable<Article[]> {
-    return this._http.get<ApiResponse>(this._articlesUrl)
-      .pipe(
-        map((resp: ApiResponse) => resp.results)
+  private _isLoadingSubject = new BehaviorSubject<boolean>(false);
+  public isLoading$ = this._isLoadingSubject.asObservable();
+
+  private _resultsQuantitySubject = new BehaviorSubject<number>(0);
+  public resultsQuantity$ = this._resultsQuantitySubject.asObservable();
+
+  private _articlesSubject = new BehaviorSubject<Article[]>([]);
+  public articles$ = this._articlesSubject.asObservable();
+
+  public getArticles(): void {
+    this._isLoadingSubject.next(true);
+    this._http.get<ApiResponse>(this._articlesUrl).subscribe(
+        (resp: ApiResponse) => {
+          this._resultsQuantitySubject.next(resp.count);
+          this._articlesSubject.next(resp.results);
+          this._isLoadingSubject.next(false);
+        }
       )
   }
 }
