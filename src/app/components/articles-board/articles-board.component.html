@@ -11,6 +11,12 @@
 
   <div class="" *ngIf="!isLoadingData$; else loading">
     <div class="font-semibold pb-[5px] border-b border-gray-200 mb-[45px]">Results: {{ results$ }}</div>
+
+    <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[45px]">
+      <li *ngFor="let article of articles">
+        <app-article-card [articleData]="article"></app-article-card>
+      </li>
+    </ul>
   </div>
   <ng-template #loading>
     <mat-spinner *ngIf="isLoadingData$" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></mat-spinner>
