@@ -8,4 +8,5 @@ import { Article } from "../../services/articles.service";
 })
 export class ArticleCardComponent {
   @Input() articleData!: Article;
+  @Input() searchWords: string[] = [];
 }

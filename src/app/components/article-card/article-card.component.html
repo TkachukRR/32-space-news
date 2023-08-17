@@ -1,7 +1,6 @@
 <mat-card class="rounded shadow border border-gray-200">
   <mat-card-header class="flex flex-col-reverse p-0">
-    <mat-card-title><h2 class="text-2xl px-[25px] mb-[20px] h-[58px] overflow-hidden">
-      {{ articleData.title }}
+    <mat-card-title><h2 class="text-2xl px-[25px] mb-[20px] h-[58px] overflow-hidden" [innerHTML]="articleData.title | wordsLighter: searchWords">
     </h2></mat-card-title>
     <p class="flex text-sm items-center opacity-60 leading-normal gap-[8px] pt-[25px] px-[25px] mb-[24px]">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,7 +25,7 @@
   </mat-card-header>
 
   <mat-card-content class="px-[25px]">
-    <p class="text-base leading-normal mb-[20px] h-[96px]" [innerHTML]="articleData.summary.slice(0, 100) | wordsLighter: []">
+    <p class="text-base leading-normal mb-[20px] h-[96px]" [innerHTML]="articleData.summary.slice(0, 100) + '...' | wordsLighter: searchWords">
     </p>
   </mat-card-content>
 

@@ -2,8 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Article, ArticlesService, SearchParams } from "../../services/articles.service";
 import { FormBuilder, FormGroup } from "@angular/forms";
 
-const ARTICLES_LIMIT = 3
-const ARTICLES_OFFSET = 3
+const ARTICLES_LIMIT = 18
+const ARTICLES_OFFSET = 18
 
 @Component({
   selector: 'app-articles-board',
@@ -17,6 +17,7 @@ export class ArticlesBoardComponent implements OnInit{
   public results$ = 0
   public isLoadingData$ = false;
   public articles: Article[] = [];
+  public searchWordsArray: string[] = [];
 
   public searchingForm: FormGroup = this._formBuilder.nonNullable.group({
       searchValue: this._formBuilder.nonNullable.control<string>('', ),
@@ -42,6 +43,7 @@ export class ArticlesBoardComponent implements OnInit{
       value: inputValue
     }
 
-    this._as.getArticles(search)
+    this.searchWordsArray = this.searchingForm.get('searchValue')?.value.replace(/\s+/g, ' ').trim().split(' ')
+    this._as.getArticles(search);
   }
 }
