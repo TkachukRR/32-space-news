@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 
 const API = {
   protocol: 'https',
@@ -64,6 +64,10 @@ export class ArticlesService {
           this._isLoadingSubject.next(false);
         }
       )
+  }
+
+  public gedArticleByID(id: number): Observable<Article>{
+    return this._http.get<Article>(this._articlesUrl + id + '/');
   }
 
   private _getSearchString(search: SearchParams): string{
