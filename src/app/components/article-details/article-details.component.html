@@ -1,2 +1,6 @@
-<p>article-details works!</p>
-{{article | json}}
+<div *ngIf="!isLoading ; else loading" class="">
+
+</div>
+<ng-template #loading>
+  <mat-spinner class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></mat-spinner>
+</ng-template>

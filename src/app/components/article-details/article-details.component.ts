@@ -12,13 +12,13 @@ export class ArticleDetailsComponent implements OnInit{
   private _route = inject(ActivatedRoute);
   @Input() articleId: number = Number(this._route.snapshot.paramMap.get('articleID'));
   public article: Article = {} as Article
-  public loading = true
+  public isLoading = true
 
   public ngOnInit(): void {
     this._as.gedArticleByID(this.articleId).subscribe(
       (article: Article) => {
         this.article = article;
-        this.loading = false;
+        this.isLoading = false;
       }
     )
   }
