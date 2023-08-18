@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 
 @Component({
   selector: 'app-article-details',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./article-details.component.scss']
 })
 export class ArticleDetailsComponent {
-
+  @Input() articleId!: number;
 }
