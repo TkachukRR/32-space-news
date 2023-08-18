@@ -12,13 +12,15 @@ import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
 import { ReactiveFormsModule } from "@angular/forms";
 import { WordsLighterPipe } from './pipes/words-lighter.pipe';
+import { ArticleDetailsComponent } from './components/article-details/article-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ArticlesBoardComponent,
     ArticleCardComponent,
-    WordsLighterPipe
+    WordsLighterPipe,
+    ArticleDetailsComponent
   ],
   imports: [
     BrowserModule,
